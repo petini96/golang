@@ -1,13 +1,13 @@
 postgres:
-	docker run --name postgres -p 5435:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
+	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 createdb:
 	docker exec -it postgres createdb --username=root --owner=root simple_blank
 dropdb:
 	docker exec -it postgres dropdb simple_blank
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5435/simple_blank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_blank?sslmode=disable" -verbose up
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5435/simple_blank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_blank?sslmode=disable" -verbose down
 sqlc:
 	docker run --rm -v /containers/simple-blank:/src -w /src kjconroy/sqlc generate
 startpostgres:
